@@ -38,6 +38,96 @@ The block diagram shows the working of a digital dice game. It uses two push but
 The game begins by pressing a button to Roll dice. After rolling, the sum of the two dice is checked. If the sum = 7 or 11, the player directly wins. If the sum = 2, 3, or 12, the player loses. If the sum is anything else, it is stored in the point register, and the player rolls the dice again. In the next roll, if the sum = point, the player wins. If the sum = 7, the player loses. If the sum is not equal to the point or 7, the game continues, and the player rolls again. After reaching a Win or Lose state, the game waits for the player to press Reset to start a new game.
 
 ## Verilog Code.
+`timescale 1ns / 1ps
 
+module DiceGame (Rb, Reset, CLK, Sum, Roll, Win, Lose);
+
+    input Rb, Reset, CLK;
+    input [3:0] Sum;
+    output reg Roll, Win, Lose;  // <-- FIXED: added reg
+
+    reg [2:0] State, Nextstate;
+    reg [3:0] Point;
+    reg Sp;
+
+    // State encoding for readability
+    localparam IDLE  = 3'd0,
+               ROLL1 = 3'd1,
+               WIN   = 3'd2,
+               LOSE  = 3'd3,
+               WAIT  = 3'd4,
+               ROLL2 = 3'd5;
+
+    // Next State and Output Logic
+    always @(*) begin
+        // Default assignments
+        Nextstate = State;
+        Roll = 1'b0;
+        Win = 1'b0;
+        Lose = 1'b0;
+        Sp = 1'b0;
+
+        case (State)
+            IDLE: begin
+                if (Rb)
+                    Nextstate = ROLL1;
+            end
+
+            ROLL1: begin
+                Roll = 1'b1;
+                if (Sum == 7 || Sum == 11)
+                    Nextstate = WIN;
+                else if (Sum == 2 || Sum == 3 || Sum == 12)
+                    Nextstate = LOSE;
+                else begin
+                    Sp = 1'b1;
+                    Nextstate = WAIT;
+                end
+            end
+
+            WIN: begin
+                Win = 1'b1;
+                if (Reset)
+                    Nextstate = IDLE;
+            end
+
+            LOSE: begin
+                Lose = 1'b1;
+                if (Reset)
+                    Nextstate = IDLE;
+            end
+
+            WAIT: begin
+                if (Rb)
+                    Nextstate = ROLL2;
+            end
+
+            ROLL2: begin
+                Roll = 1'b1;
+                if (Sum == Point)
+                    Nextstate = WIN;
+                else if (Sum == 7)
+                    Nextstate = LOSE;
+                else
+                    Nextstate = WAIT;
+            end
+
+            default: Nextstate = IDLE;
+        endcase
+    end
+
+    // State and Point Update
+    always @(posedge CLK or posedge Reset) begin
+        if (Reset) begin
+            State <= IDLE;
+            Point <= 4'd0;
+        end else begin
+            State <= Nextstate;
+            if (Sp)
+                Point <= Sum;
+        end
+    end
+
+endmodule
 
 
