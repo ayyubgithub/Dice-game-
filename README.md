@@ -28,6 +28,7 @@ Or they roll a 7 → Lose.
 
 ## Block Diagram for Dice Game
 <img width="622" height="252" alt="Screenshot (3455)" src="https://github.com/user-attachments/assets/cc971dfc-5575-4d0c-b779-ce2c96160841" />
+
 The block diagram shows the working of a digital dice game. It uses two push buttons as input: Reset and Roll (Rb). The Reset button is used to start a new game. When the Roll button is pressed, the two dice counters begin to count quickly from 1 to 6, simulating the rolling of dice. Because the counting happens at high speed, the values cannot be seen clearly on the display. When the Roll button is released, the counters stop, and the final values of both dice are shown on the displays. These values are added, and the game logic checks whether the player has won, lost, or needs to roll again.
 
 
