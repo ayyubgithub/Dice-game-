@@ -25,8 +25,10 @@ The player continues rolling until:
 
 They roll the same point again → Win
 
-Or they roll a 7 → Lose
+Or they roll a 7 → Lose.    
 
 ## Block Diagram for Dice Game
 <img width="622" height="252" alt="Screenshot (3455)" src="https://github.com/user-attachments/assets/cc971dfc-5575-4d0c-b779-ce2c96160841" />
+
+
 
