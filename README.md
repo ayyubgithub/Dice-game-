@@ -37,13 +37,6 @@ The block diagram shows the working of a digital dice game. It uses two push but
 
 The game begins by pressing a button to Roll dice. After rolling, the sum of the two dice is checked. If the sum = 7 or 11, the player directly wins. If the sum = 2, 3, or 12, the player loses. If the sum is anything else, it is stored in the point register, and the player rolls the dice again. In the next roll, if the sum = point, the player wins. If the sum = 7, the player loses. If the sum is not equal to the point or 7, the game continues, and the player rolls again. After reaching a Win or Lose state, the game waits for the player to press Reset to start a new game.
 
-## State Graph of Dice-Game Controller
-
-<img width="577" height="372" alt="Screenshot (3454)" src="https://github.com/user-attachments/assets/6e59b4fd-c6f9-44ae-a112-8d64eed603f1" />
-
-
-
-
 ## Verilog Code.
 
 `timescale 1ns / 1ps
