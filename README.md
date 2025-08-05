@@ -1,5 +1,4 @@
-# Problem Specification of Dice Game Project ("Craps")
-The goal of this project is to design a simple digital version of the popular dice game called “Craps”, using State Machine (SM) chart techniques.
+# Specification of Dice Game ("Craps").
 ### Key Functional Requirements:
 The game simulates the rolling of two dice, where:
 
