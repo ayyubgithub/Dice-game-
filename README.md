@@ -182,3 +182,6 @@ module game_sim;
 
 endmodule
 
+## Timing Analysis of Dice game.
+
+![74b80a1453c14c18b8af110e1e52d78d](https://github.com/user-attachments/assets/571ae567-92bd-4c4a-ab03-df28279c1c53)
