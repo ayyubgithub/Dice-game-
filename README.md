@@ -35,5 +35,7 @@ The block diagram shows the working of a digital dice game. It uses two push but
 <img width="408" height="456" alt="Screenshot (3451)" src="https://github.com/user-attachments/assets/f330fe20-1ac3-450a-80ed-2f9dde721ece" />
 <img width="673" height="299" alt="Screenshot (3452)" src="https://github.com/user-attachments/assets/95cccf3c-91a0-47b3-a350-cb3bb0e8a264" />
 
+The game begins by pressing a button to Roll dice. After rolling, the sum of the two dice is checked. If the sum = 7 or 11, the player directly wins. If the sum = 2, 3, or 12, the player loses. If the sum is anything else, it is stored in the point register, and the player rolls the dice again. In the next roll, if the sum = point, the player wins. If the sum = 7, the player loses. If the sum is not equal to the point or 7, the game continues, and the player rolls again. After reaching a Win or Lose state, the game waits for the player to press Reset to start a new game.
+
 
 
