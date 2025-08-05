@@ -38,6 +38,7 @@ The block diagram shows the working of a digital dice game. It uses two push but
 The game begins by pressing a button to Roll dice. After rolling, the sum of the two dice is checked. If the sum = 7 or 11, the player directly wins. If the sum = 2, 3, or 12, the player loses. If the sum is anything else, it is stored in the point register, and the player rolls the dice again. In the next roll, if the sum = point, the player wins. If the sum = 7, the player loses. If the sum is not equal to the point or 7, the game continues, and the player rolls again. After reaching a Win or Lose state, the game waits for the player to press Reset to start a new game.
 
 ## Verilog Code.
+
 `timescale 1ns / 1ps
 
 module DiceGame (Rb, Reset, CLK, Sum, Roll, Win, Lose);
@@ -130,4 +131,54 @@ module DiceGame (Rb, Reset, CLK, Sum, Roll, Win, Lose);
 
 endmodule
 
+## Verilog Test bench.
+
+module game_sim;
+
+    reg Rb, Reset, CLK;
+    reg [3:0] Sum;
+    wire Roll, Win, Lose;  
+
+    // Instantiate the DiceGame module
+    DiceGame uut (
+        .Rb(Rb),
+        .Reset(Reset),
+        .CLK(CLK),
+        .Sum(Sum),
+        .Roll(Roll),
+        .Win(Win),
+        .Lose(Lose)
+    );
+
+    // Clock generation
+    always #5 CLK = ~CLK;
+
+    initial begin
+        // Initialize inputs
+        CLK = 0;
+        Reset = 1;
+        Rb = 0;
+        Sum = 0;
+
+        #10 Reset = 0;
+        #10 Rb = 1; Sum = 7; // First roll - win
+        #10 Rb = 0;
+        #20 Reset = 1;       // Reset
+        #10 Reset = 0;
+
+        #10 Rb = 1; Sum = 3; // First roll - lose
+        #10 Rb = 0;
+        #20 Reset = 1;       // Reset
+        #10 Reset = 0;
+
+        #10 Rb = 1; Sum = 5; // First roll - go to WAIT
+        #10 Rb = 0;
+        #10 Rb = 1; Sum = 5; // Matching point - win
+        #10 Rb = 0;
+        #10 Reset = 1;
+
+        #20 $finish;
+    end
+
+endmodule
 
